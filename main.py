@@ -1,9 +1,13 @@
 from app import app, mongo
+from flask import render_template
 from bson.json_util import dumps
 from bson.objectid import ObjectId
 from flask import jsonify, flash, request
 from werkzeug.security import generate_password_hash, check_password_hash
 
+@app.route('/')
+def saeeam():
+	return render_template("index.html")
 
 @app.route('/add', methods=['POST'])
 def add_user():
