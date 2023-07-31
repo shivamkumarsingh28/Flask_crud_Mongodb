@@ -1,29 +1,8 @@
-from flask import Flask, request
-from pymongo import MongoClient
+from flask import Flask
+from flask_pymongo import PyMongo
 
-# flask app object
 app = Flask(__name__)
+app.secret_key = "secret key"
+app.config["MONGO_URI"] = "mongodb://localhost:27017/saeeamdb"
+mongo = PyMongo(app)
 
-# root route
-@app.route('/')
-def saeeam():
-    return 'Hello, SaeeAM'
-
-# set up mongodb connection
-client = MongoClient('mongodb://localhost:27017')
-db = client['demo']
-collection = db['data']
-
-
-@app.route('/add_data', methods=['POST'])
-def add_data():
-    # Get data from request
-    data = request.json
-  
-    # Insert data into MongoDB
-    collection.insert_one(data)
-  
-    return 'Data added to MongoDB'
-
-if __name__ == "__main__":
-    app.run(debug=True)
